@@ -1,32 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WorkSocial India</title>
-</head>
-<body>
-  
-</body>
-</html> <!DOCTYPE html>
-<html lang="en-IN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WorkSocial India | Home</title>
-  <meta name="description" content="WorkSocial India is a leading platform for financial tools and resources.">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.worksocial.org">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
   <style>
     body {
       font-family: 'Lato', sans-serif;
       background-color: #f8f9fa;
       margin: 0;
-      padding: 0;
     }
     header {
       background-color: #004085;
@@ -34,30 +17,69 @@
       padding: 1rem 0;
       text-align: center;
     }
-    .container {
+    .game-container {
+      text-align: center;
       margin-top: 2rem;
     }
-    .card {
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    #man-svg {
+      width: 200px;
+      height: 200px;
     }
-    .feature-icon {
-      font-size: 3rem;
-      color: #004085;
+    #message {
+      font-size: 1.2rem;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
-
 <header>
   <h1>Welcome to WorkSocial India</h1>
   <p>Your Partner in Financial Well-being</p>
 </header>
-
-<main class="container">
-  <div class="row text-center">
-    <div class="col-md-4 mb-4">
-      <div class="card p-4 h-100">
-        <div class="feature-icon mb-3">📊</div>
-        <h3>EMI Calculator</h3>
-        <p>Calculate your Equated Monthly Installments for various loans quickly
+<main class="container game-container">
+  <h2>Stop the Hand Game</h2>
+  <p>Press the spacebar to stop the man's rotating hand when it points to the right.</p>
+  <svg id="man-svg" viewBox="0 0 200 200">
+    <circle cx="100" cy="40" r="20" stroke="black" stroke-width="4" fill="none" />
+    <line x1="100" y1="60" x2="100" y2="120" stroke="black" stroke-width="4" />
+    <line x1="100" y1="80" x2="60" y2="110" stroke="black" stroke-width="4" />
+    <g id="right-arm">
+      <line x1="100" y1="80" x2="140" y2="110" stroke="black" stroke-width="4" />
+    </g>
+  </svg>
+  <div id="message"></div>
+</main>
+<script>
+  const arm = document.getElementById('right-arm');
+  const message = document.getElementById('message');
+  let angle = 0;
+  let rotating = true;
+  const speed = 2; // degrees per frame
+  const tolerance = 10; // acceptable degrees from 0
+  function animate() {
+    if (rotating) {
+      angle = (angle + speed) % 360;
+      arm.setAttribute('transform', `rotate(${angle} 100 80)`);
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      rotating = !rotating;
+      if (!rotating) {
+        const normalized = angle % 360;
+        if (normalized < tolerance || normalized > 360 - tolerance) {
+          message.textContent = 'Great job!';
+        } else {
+          message.textContent = 'Try again!';
+        }
+      } else {
+        message.textContent = '';
+      }
+    }
+  });
+</script>
+</body>
+</html>
