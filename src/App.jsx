@@ -1,16 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Calculators from "./pages/Calculators";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-  <div className="min-h-screen grid place-items-center bg-gray-50">
-    <h1 className="text-4xl font-extrabold tracking-tight">WorkSocial India</h1>
-  </div>
-);
-
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/calculators" element={<Calculators />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<Home />} />
+      </Routes>
+    </div>
+  );
 }
-
-export default App
