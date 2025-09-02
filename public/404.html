@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting…</title>
+    <meta name="robots" content="noindex" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- If JS is disabled, at least land on the home page -->
+    <meta http-equiv="refresh" content="0;url=/" />
+    <script>
+      (function () {
+        // Preserve the path on refresh: /calculators/emi -> /?p=calculators/emi
+        var l = window.location;
+        var path = l.pathname.replace(/^\/+/, ""); // strip leading "/"
+        var target = "/" + (path ? "?p=" + encodeURIComponent(path) : "") + l.search + l.hash;
+        l.replace(target);
+      })();
+    </script>
+  </head>
+  <body>Redirecting…</body>
+</html>

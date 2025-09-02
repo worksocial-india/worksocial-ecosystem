@@ -1,6 +1,18 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+  // If we came from /404.html with ?p=..., restore the original path without reloading
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var p = params.get("p");
+    if (p) {
+      var newPath = "/" + decodeURIComponent(p);
+      history.replaceState(null, "", newPath + window.location.hash);
+    }
+  })();
+</script>
+
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

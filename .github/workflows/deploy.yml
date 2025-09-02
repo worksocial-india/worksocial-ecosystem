@@ -33,8 +33,13 @@ jobs:
         run: npm run build
 
       # SPA fallback so React Router works on refresh/deep links
-      - name: Add 404 fallback
-        run: cp dist/index.html dist/404.html
+            # SPA fallback so React Router works on refresh/deep links
+      - name: Add 404 fallback (keep existing if provided)
+        run: |
+          if [ ! -f dist/404.html ]; then
+            cp dist/index.html dist/404.html
+          fi
+
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
