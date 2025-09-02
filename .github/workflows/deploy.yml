@@ -33,7 +33,6 @@ jobs:
         run: npm run build
 
       # SPA fallback so React Router works on refresh/deep links
-            # SPA fallback so React Router works on refresh/deep links
       - name: Add 404 fallback (keep existing if provided)
         run: |
           if [ ! -f dist/404.html ]; then

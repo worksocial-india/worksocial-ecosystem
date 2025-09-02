@@ -1,12 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
 import Home from "./pages/Home";
 import Calculators from "./pages/Calculators";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import EMI from "./pages/EMI";
+import Eligibility from "./pages/Eligibility";
+
 
 
 export default function App() {
@@ -20,6 +21,8 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Home />} />
         <Route path="/calculators/emi" element={<EMI />} />
+        <Route path="/calculators/eligibility" element={<Eligibility />} />
+
 
       </Routes>
       <Footer />
