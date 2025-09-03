@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -14,17 +14,19 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/calculators" element={<Calculators />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/calculators/emi" element={<EMI />} />
-        <Route path="/calculators/eligibility" element={<Eligibility />} />
-        <Route path="/calculators/part-payment" element={<PartPrepaymentCalculator />} />
-        <Route path="/calculators/amortization" element={<AmortizationCalculator />} />
-        <Route path="*" element={<Home />} />
-      </Routes>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/calculators" element={<Calculators />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/calculators/emi" element={<EMI />} />
+          <Route path="/calculators/eligibility" element={<Eligibility />} />
+          <Route path="/calculators/part-payment" element={<PartPrepaymentCalculator />} />
+          <Route path="/calculators/amortization" element={<AmortizationCalculator />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </Router>
       <Footer />
     </div>
   );
