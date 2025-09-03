@@ -39,6 +39,10 @@ jobs:
             cp dist/index.html dist/404.html
           fi
 
+      - name: Verify 404 fallback
+        run: |
+          ls -la dist
+          test -f dist/404.html && echo "✅ 404.html present" || (echo "❌ 404.html missing" && exit 1)
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
