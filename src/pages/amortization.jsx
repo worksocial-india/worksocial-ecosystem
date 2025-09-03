@@ -1,8 +1,4 @@
 import { useState, useMemo } from "react";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
 
 /** --- Helpers --- */
 const fmtINR = (n, frac = 0) =>
@@ -51,45 +47,59 @@ export default function AmortizationCalculator() {
   const [years, setYears] = useState(20);
 
   const months = useMemo(() => Math.max(1, Math.round(years * 12)), [years]);
-
   const { emi: monthlyEmi, rows, totalInterest } = useMemo(
     () => buildSchedule(amount, rate, months),
     [amount, rate, months]
   );
 
-  // -------- Export: Excel --------
-  const exportExcel = () => {
-    const data = rows.map((r) => ({
-      Month: r.month,
-      EMI: Math.round(r.emi),
-      Principal: Math.round(r.principal),
-      Interest: Math.round(r.interest),
-      Balance: Math.round(r.balance),
-    }));
-    const ws = XLSX.utils.json_to_sheet(data);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Amortization");
-    const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    saveAs(new Blob([wbout], { type: "application/octet-stream" }), "amortization.xlsx");
+  // -------- Lazy exporters (no top-level heavy imports) --------
+  const exportExcel = async () => {
+    try {
+      const XLSX = await import("xlsx");
+      const { utils } = XLSX;
+      const data = rows.map((r) => ({
+        Month: r.month,
+        EMI: Math.round(r.emi),
+        Principal: Math.round(r.principal),
+        Interest: Math.round(r.interest),
+        Balance: Math.round(r.balance),
+      }));
+      const ws = utils.json_to_sheet(data);
+      const wb = utils.book_new();
+      utils.book_append_sheet(wb, ws, "Amortization");
+      const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+      const { saveAs } = await import("file-saver");
+      saveAs(new Blob([wbout], { type: "application/octet-stream" }), "amortization.xlsx");
+    } catch (e) {
+      console.error(e);
+      alert("Excel export failed. Run: npm i xlsx file-saver");
+    }
   };
 
-  // -------- Export: PDF --------
-  const exportPDF = () => {
-    const doc = new jsPDF();
-    doc.text("Amortization Schedule", 14, 15);
-    const head = [["Month", "EMI", "Principal", "Interest", "Balance"]];
-    const body = rows.map((r) => [
-      r.month,
-      fmtINR(r.emi),
-      fmtINR(r.principal),
-      fmtINR(r.interest),
-      fmtINR(r.balance),
-    ]);
-    doc.autoTable({ head, body, startY: 20, styles: { fontSize: 8 } });
-    doc.save("amortization.pdf");
+  const exportPDF = async () => {
+    try {
+      const jsPDFModule = await import("jspdf");
+      const jsPDF = jsPDFModule.default || jsPDFModule; // handle CJS/ESM
+      await import("jspdf-autotable"); // attaches autoTable to jsPDF
+      const doc = new jsPDF();
+      doc.text("Amortization Schedule", 14, 15);
+      const head = [["Month", "EMI", "Principal", "Interest", "Balance"]];
+      const body = rows.map((r) => [
+        r.month,
+        fmtINR(r.emi),
+        fmtINR(r.principal),
+        fmtINR(r.interest),
+        fmtINR(r.balance),
+      ]);
+      // @ts-ignore (plugin adds autoTable)
+      doc.autoTable({ head, body, startY: 20, styles: { fontSize: 8 } });
+      doc.save("amortization.pdf");
+    } catch (e) {
+      console.error(e);
+      alert("PDF export failed. Run: npm i jspdf jspdf-autotable");
+    }
   };
 
-  // -------- Share: WhatsApp --------
   const shareWhatsApp = () => {
     const yearsPart = Math.floor(months / 12);
     const monthsPart = months % 12;
@@ -97,7 +107,6 @@ export default function AmortizationCalculator() {
       yearsPart > 0
         ? `${yearsPart} yr${yearsPart > 1 ? "s" : ""}${monthsPart ? ` ${monthsPart} mo` : ""}`
         : `${monthsPart} mo`;
-
     const msg =
       `*WorkSocial India – Amortization Summary*\n\n` +
       `• Loan Amount: ${fmtINR(amount)}\n` +
@@ -106,15 +115,12 @@ export default function AmortizationCalculator() {
       `• Monthly EMI: ${fmtINR(monthlyEmi)}\n` +
       `• Total Interest: ${fmtINR(totalInterest)}\n` +
       `• Total Payment: ${fmtINR(amount + totalInterest)}\n\n` +
-      `Calculate your schedule here:\nhttps://worksocial.in/calculators/amortization`;
-
-    const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+      `Calculate your schedule:\nhttps://worksocial.in/calculators/amortization`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* top gradient strip */}
       <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white text-center text-sm py-2">
         Amortization schedule – full month-by-month breakdown
       </div>
@@ -136,7 +142,6 @@ export default function AmortizationCalculator() {
                 step={10000}
               />
             </label>
-
             <label className="block">
               <div className="text-sm text-gray-600 mb-1">Interest Rate (%)</div>
               <input
@@ -149,7 +154,6 @@ export default function AmortizationCalculator() {
                 step={0.05}
               />
             </label>
-
             <label className="block">
               <div className="text-sm text-gray-600 mb-1">Loan Term (Years)</div>
               <input
@@ -183,23 +187,13 @@ export default function AmortizationCalculator() {
 
         {/* Actions */}
         <div className="flex flex-wrap gap-3 mb-6">
-          <button
-            onClick={exportExcel}
-            className="rounded-xl bg-green-600 text-white px-4 py-2 shadow hover:opacity-90"
-          >
+          <button onClick={exportExcel} className="rounded-xl bg-green-600 text-white px-4 py-2 shadow hover:opacity-90">
             Export Excel
           </button>
-          <button
-            onClick={exportPDF}
-            className="rounded-xl bg-red-600 text-white px-4 py-2 shadow hover:opacity-90"
-          >
+          <button onClick={exportPDF} className="rounded-xl bg-red-600 text-white px-4 py-2 shadow hover:opacity-90">
             Export PDF
           </button>
-          <button
-            onClick={shareWhatsApp}
-            className="rounded-xl bg-[#25D366] text-white px-4 py-2 shadow hover:opacity-90"
-            title="Share summary on WhatsApp"
-          >
+          <button onClick={shareWhatsApp} className="rounded-xl bg-[#25D366] text-white px-4 py-2 shadow hover:opacity-90" title="Share summary on WhatsApp">
             Share on WhatsApp
           </button>
         </div>
@@ -209,10 +203,7 @@ export default function AmortizationCalculator() {
           <h2 className="text-xl font-semibold mb-4">Amortization Schedule</h2>
           <div className="max-h-[600px] overflow-y-auto divide-y border rounded-xl">
             {rows.map((row) => (
-              <div
-                key={row.month}
-                className="grid grid-cols-5 gap-2 px-4 py-2 text-sm text-gray-700"
-              >
+              <div key={row.month} className="grid grid-cols-5 gap-2 px-4 py-2 text-sm text-gray-700">
                 <div>Month {row.month}</div>
                 <div>EMI: {fmtINR(row.emi)}</div>
                 <div>Principal: {fmtINR(row.principal)}</div>
