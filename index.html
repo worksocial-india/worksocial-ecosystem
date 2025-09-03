@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-  <head>
+  <>
     <script>
   // If we came from /404.html with ?p=..., restore the original path without reloading
   (function () {
@@ -21,6 +21,18 @@
   name="description"
   content="WorkSocial India — smart tools for home loans (EMI, eligibility, amortization) to help customers and bankers make confident decisions."
 />
+
+<script>
+  // If redirected from 404.html (?p=...), restore the real path so React Router sees it.
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var redirect = params.get("p");
+    if (redirect) {
+      window.history.replaceState(null, "", "/" + redirect);
+    }
+  })();
+</script>
+
 
   </head>
   <body>
