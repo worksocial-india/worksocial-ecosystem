@@ -7,6 +7,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import EMI from "./pages/EMI";
 import Eligibility from "./pages/Eligibility";
+import PartPrepaymentCalculator from "./pages/PartPrepaymentCalculator";
 
 
 
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="*" element={<Home />} />
         <Route path="/calculators/emi" element={<EMI />} />
         <Route path="/calculators/eligibility" element={<Eligibility />} />
+        <Route path="/calculators/part-payment" element={<PartPrepaymentCalculator />} />
 
 
       </Routes>
