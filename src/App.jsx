@@ -8,10 +8,7 @@ import Contact from "./pages/Contact";
 import EMI from "./pages/EMI";
 import Eligibility from "./pages/Eligibility";
 import PartPrepaymentCalculator from "./pages/part-payment";
-import AmortizationCalculator from "./pages/Amortization";
-
-
-
+import AmortizationCalculator from "./pages/amortization";
 
 export default function App() {
   return (
@@ -22,14 +19,11 @@ export default function App() {
         <Route path="/calculators" element={<Calculators />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<Home />} />
         <Route path="/calculators/emi" element={<EMI />} />
         <Route path="/calculators/eligibility" element={<Eligibility />} />
         <Route path="/calculators/part-payment" element={<PartPrepaymentCalculator />} />
         <Route path="/calculators/amortization" element={<AmortizationCalculator />} />
-
-
-
+        <Route path="*" element={<Home />} />
       </Routes>
       <Footer />
     </div>
