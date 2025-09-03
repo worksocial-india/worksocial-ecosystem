@@ -1,39 +1,27 @@
 <!doctype html>
 <html lang="en">
-  <>
-    <script>
-  // If we came from /404.html with ?p=..., restore the original path without reloading
-  (function () {
-    var params = new URLSearchParams(window.location.search);
-    var p = params.get("p");
-    if (p) {
-      var newPath = "/" + decodeURIComponent(p);
-      history.replaceState(null, "", newPath + window.location.hash);
-    }
-  })();
-</script>
-
+  <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>WorkSocial India</title>
     <meta
-  name="description"
-  content="WorkSocial India — smart tools for home loans (EMI, eligibility, amortization) to help customers and bankers make confident decisions."
-/>
+      name="description"
+      content="WorkSocial India — smart tools for home loans (EMI, eligibility, amortization) to help customers and bankers make confident decisions."
+    />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
 
-<script>
-  // If redirected from 404.html (?p=...), restore the real path so React Router sees it.
-  (function () {
-    var params = new URLSearchParams(window.location.search);
-    var redirect = params.get("p");
-    if (redirect) {
-      window.history.replaceState(null, "", "/" + redirect);
-    }
-  })();
-</script>
-
-
+    <!-- SPA path restore for GitHub Pages (works with public/404.html) -->
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var p = params.get("p");
+        if (p) {
+          // restore original route before React mounts
+          var newPath = "/" + decodeURIComponent(p);
+          history.replaceState(null, "", newPath + window.location.hash);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

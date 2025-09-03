@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 const tools = [
   { title: "EMI Calculator", desc: "Monthly EMI, total interest, schedule.", path: "/calculators/emi" },
   { title: "Eligibility", desc: "Max loan based on income & obligations.", path: "/calculators/eligibility" },
-  { title: "Part-Payment", desc: "Impact of extra payments on tenure/EMI.", path: "/calculators/part-payment" },
+  { title: "Part-Payment", path: "/calculators/part-payment", desc: "Impact of extra payments on tenure/EMI." }, // <-- add comma here
   { title: "Amortization", desc: "Full payment table with breakdowns.", path: "/calculators/amortization" },
 ];
+
 
 export default function Calculators() {
   return (
