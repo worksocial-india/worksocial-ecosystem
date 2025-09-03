@@ -53,16 +53,14 @@ function buildSchedule({
     // if lump sum month, add it as principal reduction
     let lump = 0;
     if (prepayType === "lump" && lumpAtMonth > 0 && m === lumpAtMonth) {
-      lump = Math.min(lumpSum, balance - principalPart);
+      lump = Math.min(lumpSum, Math.max(0, balance - principalPart));
       principalPart += lump;
     }
 
-    // if about to overshoot, cap to remaining balance
-    if (principalPart > balance) {
-      principalPart = balance;
-    }
+    // cap to remaining balance
+    if (principalPart > balance) principalPart = balance;
 
-    balance = balance - principalPart;
+    balance -= principalPart;
     totalInterest += interest;
 
     rows.push({
@@ -74,7 +72,6 @@ function buildSchedule({
       balance,
     });
 
-    // stop when paid off
     if (balance <= 0.01) break;
   }
 
@@ -143,7 +140,9 @@ export default function PartPrepaymentCalculator() {
         Calculate savings from lump sum or regular additional payments
       </div>
 
-      <main className="max-w-6xl mx-auto p-4 md:p-6">
+      <main className="max-w-5xl mx-auto px-4 py-10">
+        <h1 className="text-3xl font-bold mb-4">Part-Payment Calculator</h1>
+
         {/* Stats row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="rounded-2xl bg-gradient-to-r from-fuchsia-600 to-pink-500 text-white p-5 shadow-sm">
@@ -282,12 +281,11 @@ export default function PartPrepaymentCalculator() {
               </div>
             )}
 
-            {/* calculate button (not strictly needed; calculations are reactive) */}
+            {/* calculate button (reactive anyway) */}
             <button
               type="button"
               className="mt-6 w-full rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-3 text-white font-semibold shadow-sm hover:opacity-95"
               onClick={() => {
-                // values are reactive; this is just a friendly focus/scroll behavior
                 document.getElementById("comparison")?.scrollIntoView({ behavior: "smooth" });
               }}
             >
@@ -314,9 +312,7 @@ export default function PartPrepaymentCalculator() {
                   </div>
                   <div className="text-sm text-gray-600 flex justify-between mt-1">
                     <span>Loan Duration:</span>
-                    <span className="font-medium text-gray-900">
-                      {base.monthsPaid} months
-                    </span>
+                    <span className="font-medium text-gray-900">{base.monthsPaid} months</span>
                   </div>
                 </div>
 
@@ -325,9 +321,7 @@ export default function PartPrepaymentCalculator() {
                   <div className="text-sm text-gray-600 flex justify-between">
                     <span>Monthly EMI:</span>
                     <span className="font-medium text-gray-900">
-                      {fmtINR(
-                        tab === "regular" ? base.baseEmi + extraMonthly : base.baseEmi
-                      )}
+                      {fmtINR(tab === "regular" ? base.baseEmi + extraMonthly : base.baseEmi)}
                     </span>
                   </div>
                   <div className="text-sm text-gray-600 flex justify-between mt-1">
@@ -338,9 +332,7 @@ export default function PartPrepaymentCalculator() {
                   </div>
                   <div className="text-sm text-gray-600 flex justify-between mt-1">
                     <span>Loan Duration:</span>
-                    <span className="font-medium text-gray-900">
-                      {withPrepay.monthsPaid} months
-                    </span>
+                    <span className="font-medium text-gray-900">{withPrepay.monthsPaid} months</span>
                   </div>
                 </div>
               </div>
@@ -365,12 +357,8 @@ export default function PartPrepaymentCalculator() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm">
-                        EMI: {fmtINR(row.emi)}
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        Balance: {fmtINR(row.balance)}
-                      </div>
+                      <div className="text-sm">EMI: {fmtINR(row.emi)}</div>
+                      <div className="text-xs text-gray-500">Balance: {fmtINR(row.balance)}</div>
                     </div>
                   </div>
                 ))}
