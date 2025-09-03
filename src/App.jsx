@@ -7,7 +7,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import EMI from "./pages/EMI";
 import Eligibility from "./pages/Eligibility";
-import PartPrepaymentCalculator from "./pages/PartPrepaymentCalculator";
+import PartPrepaymentCalculator from "./pages/part-payment";
 
 
 
