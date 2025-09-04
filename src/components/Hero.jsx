@@ -2,29 +2,18 @@ import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
-    <header className="relative overflow-hidden">
-      {/* top gradient bg */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500"></div>
+    <header
+      className="relative h-screen flex items-center bg-cover bg-center"
+      style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
+    >
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/60"></div>
 
-      {/* subtle pattern */}
-      <svg
-        className="absolute inset-0 -z-10 opacity-10"
-        width="100%" height="100%" preserveAspectRatio="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid)" />
-      </svg>
-
-      {/* container */}
-      <div className="max-w-6xl mx-auto px-4 py-16 md:py-24 lg:py-28">
+      {/* Content container */}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 py-16 text-white">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* Left: copy + CTAs */}
-          <div className="text-white">
+          <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs backdrop-blur">
               <span>🏦 Home Loan Toolkit</span>
               <span className="opacity-80">Made for India</span>
@@ -69,22 +58,6 @@ export default function Hero() {
                 Chat on WhatsApp
               </a>
             </div>
-
-            {/* trust row */}
-            <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-white/90">
-              <div className="rounded-lg bg-white/10 px-3 py-2 border border-white/10">
-                🇮🇳 Indian amortization rules
-              </div>
-              <div className="rounded-lg bg-white/10 px-3 py-2 border border-white/10">
-                📄 PDF/XLSX exports
-              </div>
-              <div className="rounded-lg bg-white/10 px-3 py-2 border border-white/10">
-                🔒 No login required
-              </div>
-              <div className="rounded-lg bg-white/10 px-3 py-2 border border-white/10">
-                🚀 Mobile-first UX
-              </div>
-            </div>
           </div>
 
           {/* Right: illustration / KPI card */}
@@ -126,13 +99,6 @@ export default function Hero() {
                 >
                   Start with EMI →
                 </Link>
-              </div>
-
-              {/* floating badge */}
-              <div className="absolute -bottom-4 -left-6 rotate-[-4deg]">
-                <div className="rounded-2xl backdrop-blur bg-white/70 border px-4 py-2 shadow text-sm">
-                  🎯 Built for bankers & customers
-                </div>
               </div>
             </div>
           </div>
