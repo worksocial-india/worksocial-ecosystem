@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Calculators from "./pages/Calculators";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import EMI from "./pages/EMI";
+import EMI from "./pages/emi";
 import Eligibility from "./pages/Eligibility";
 import PartPrepaymentCalculator from "./pages/part-payment";
 import AmortizationCalculator from "./pages/amortization";
