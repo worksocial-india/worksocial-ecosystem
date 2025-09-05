@@ -48,7 +48,7 @@ export default function Footer() {
               </svg>
             </a>
             {/* YouTube */}
-            <a className={aLink} href="https://www.youtube.com/@worksocial" target="_blank" rel="noreferrer" aria-label="YouTube">
+            <a className={aLink} href="https://www.youtube.com/@worksocialindia" target="_blank" rel="noreferrer" aria-label="YouTube">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M21.58 7.2a3 3 0 0 0-2.12-2.13C17.98 4.5 12 4.5 12 4.5s-5.98 0-7.46.57A3 3 0 0 0 2.42 7.2 31.62 31.62 0 0 0 2 12c0 1.65.2 3.3.42 4.8a3 3 0 0 0 2.12 2.13C5.98 19.5 12 19.5 12 19.5s5.98 0 7.46-.57a3 3 0 0 0 2.12-2.13c.22-1.5.42-3.15.42-4.8 0-1.65-.2-3.3-.42-4.8ZM10 15.5v-7l6 3.5-6 3.5Z" fill="currentColor"/>
               </svg>

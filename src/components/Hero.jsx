@@ -1,15 +1,17 @@
+// src/components/Hero.jsx
 import { Link } from "react-router-dom";
+import heroBg from "../assets/hero-bg.jpg"; // <-- bundled import (Vite will fingerprint + serve it)
 
 export default function Hero() {
   return (
     <header
-      className="relative h-screen flex items-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
+      className="relative min-h-[90vh] md:h-screen flex items-center bg-cover bg-center"
+      style={{ backgroundImage: `url(${heroBg})` }}
     >
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/60"></div>
+      {/* Dark overlay for readability (tune to 40–60% based on your photo) */}
+      <div className="absolute inset-0 bg-black/50"></div>
 
-      {/* Content container */}
+      {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 py-16 text-white">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* Left: copy + CTAs */}
@@ -19,17 +21,16 @@ export default function Hero() {
               <span className="opacity-80">Made for India</span>
             </div>
 
-            <h1 className="mt-4 text-3xl md:text-5xl font-extrabold leading-tight">
+            <h1 className="mt-4 text-3xl md:text-5xl font-extrabold leading-tight drop-shadow-[0_2px_2px_rgba(0,0,0,0.35)]">
               Make smarter home-loan moves—
               <span className="block">EMI, eligibility & part-payment in seconds.</span>
             </h1>
 
-            <p className="mt-4 text-white/90 md:text-lg">
+            <p className="mt-4 text-white/90 md:text-lg max-w-xl">
               WorkSocial India helps customers and bankers cut through the noise—clear
               numbers, clean UX, and shareable outputs tailored for Indian lending.
             </p>
 
-            {/* primary CTAs */}
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
                 to="/calculators/emi"
@@ -51,7 +52,8 @@ export default function Hero() {
               </Link>
               <a
                 href="https://wa.me/918000000000?text=Hi%20WorkSocial%20India%20—%20I%20want%20help%20with%20my%20home%20loan."
-                target="_blank" rel="noopener noreferrer"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="rounded-xl bg-[#25D366] text-white font-semibold px-5 py-3 hover:opacity-95"
                 title="WhatsApp us"
               >
@@ -60,7 +62,7 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right: illustration / KPI card */}
+          {/* Right: KPI card */}
           <div className="relative">
             <div className="mx-auto max-w-md">
               <div className="rounded-3xl bg-white shadow-xl p-6 border">
