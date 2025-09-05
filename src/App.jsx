@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -14,17 +14,20 @@ import AmortizationCalculator from "./pages/amortization";
 
 export default function App() {
   const location = useLocation();
+  const firstLoadSentRef = useRef(false);
 
-  // Track page views on route change
+  // Track page views on route change (skip first load; GA snippet already fired)
   useEffect(() => {
-    const page_path = location.pathname + location.search;
-    const page_location = window.location.href;
-
+    if (!firstLoadSentRef.current) {
+      firstLoadSentRef.current = true;
+      return;
+    }
     if (window.gtag) {
       window.gtag("event", "page_view", {
         page_title: document.title,
-        page_path,
-        page_location,
+        page_path: location.pathname + location.search,
+        page_location: window.location.href,
+        // debug_mode: true, // uncomment to see events in DebugView
       });
     }
   }, [location]);
@@ -37,11 +40,11 @@ export default function App() {
         <Route path="/calculators" element={<Calculators />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<Home />} />
         <Route path="/calculators/emi" element={<EMI />} />
         <Route path="/calculators/eligibility" element={<Eligibility />} />
         <Route path="/calculators/part-payment" element={<PartPrepaymentCalculator />} />
         <Route path="/calculators/amortization" element={<AmortizationCalculator />} />
+        <Route path="*" element={<Home />} />
       </Routes>
       <Footer />
     </div>

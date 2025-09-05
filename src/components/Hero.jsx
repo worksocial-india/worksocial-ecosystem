@@ -22,8 +22,8 @@ export default function Hero() {
             </div>
 
             <h1 className="mt-4 text-3xl md:text-5xl font-extrabold leading-tight drop-shadow-[0_2px_2px_rgba(0,0,0,0.35)]">
-              Make smarter home-loan moves—
-              <span className="block">EMI, eligibility & part-payment in seconds.</span>
+              Make Smarter Home-Loan Moves with WorkSocial India—
+          
             </h1>
 
             <p className="mt-4 text-white/90 md:text-lg max-w-xl">

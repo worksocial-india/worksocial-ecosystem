@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+/* Mobile-safe base */
+*,
+*::before,
+*::after { box-sizing: border-box; min-width: 0; }
+html, body { width: 100%; margin: 0; overflow-x: hidden; }
+img, video, canvas, svg { max-width: 100%; height: auto; display: block; }
+
+
+/* Respect iOS safe areas for full-bleed sections */
+:root {
+  --safe-top: env(safe-area-inset-top);
+  --safe-right: env(safe-area-inset-right);
+  --safe-bottom: env(safe-area-inset-bottom);
+  --safe-left: env(safe-area-inset-left);
+}
+.full-bleed {
+  padding-left: max(1rem, var(--safe-left));
+  padding-right: max(1rem, var(--safe-right));
+}
+
+/* Optional: clamp mega headlines on tiny screens */
+.h1-fluid {
+  font-weight: 800;
+  line-height: 1.1;
+  /* 24px → 48px fluid scale */
+  font-size: clamp(1.5rem, 2.5vw + 1rem, 3rem);
+}
