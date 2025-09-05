@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>WorkSocial India</title>
+    <meta
+      name="description"
+      content="WorkSocial India — smart tools for home loans (EMI, eligibility, amortization) to help customers and bankers make confident decisions."
+    />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+    <!-- SPA path restore for GitHub Pages (works with public/404.html) -->
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var p = params.get("p");
+        if (p) {
+          var newPath = "/" + decodeURIComponent(p);
+          history.replaceState(null, "", newPath + window.location.hash);
+        }
+      })();
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLZ6Y90X9D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-QLZ6Y90X9D', { anonymize_ip: true });
+    </script>
+
+    <!-- Vite injects your app after GA -->
+    <script type="module" crossorigin src="/assets/index-CWY2YeZ3.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C91IHZy9.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
