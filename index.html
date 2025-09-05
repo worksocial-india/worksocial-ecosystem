@@ -16,40 +16,25 @@
         var params = new URLSearchParams(window.location.search);
         var p = params.get("p");
         if (p) {
-          // restore original route before React mounts
           var newPath = "/" + decodeURIComponent(p);
           history.replaceState(null, "", newPath + window.location.hash);
         }
       })();
     </script>
 
-     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QLZ6Y90X9D"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLZ6Y90X9D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-QLZ6Y90X9D', { anonymize_ip: true });
+    </script>
 
-  // boot
-  gtag('js', new Date());
-
-  // fire config WITH debug_mode to make it show up in DebugView
-  gtag('config', 'G-QLZ6Y90X9D', {
-    anonymize_ip: true,
-    debug_mode: true
-  });
-
-  // send an explicit page_view on first load for Tag Assistant detection
-  gtag('event', 'page_view', {
-    page_title: document.title,
-    page_path: location.pathname + location.search,
-    page_location: location.href
-  });
-</script>
-
-
+    <!-- Vite injects your app after GA -->
+    <script type="module" src="/src/main.jsx"></script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
