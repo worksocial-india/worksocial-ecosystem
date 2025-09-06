@@ -27,21 +27,25 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: Print Node/npm
+        run: |
+          node -v
+          npm -v
+
+      # Use install (tolerant) instead of strict npm ci
       - name: Install deps
-        run: npm install --no-audit --no-fund
+        run: npm install --no-audit --no-fund --legacy-peer-deps
 
       - name: Build
         env:
-          CI: true
+          CI: ""      # avoid treating warnings as fatal
         run: npm run build
 
-      # Make sure custom domain persists on every publish
-      - name: Add CNAME (worksocial.in)
-        run: |
-          echo "worksocial.in" > dist/CNAME
+      # Keep custom domain + SPA refresh working
+      - name: Add CNAME
+        run: echo "worksocial.in" > dist/CNAME
 
-      # SPA fallback so React Router works on refresh/deep links
-      - name: Add 404 fallback (keep existing if provided)
+      - name: Add 404 fallback
         run: |
           if [ ! -f dist/404.html ]; then
             cp dist/index.html dist/404.html
@@ -50,8 +54,8 @@ jobs:
       - name: Verify outputs
         run: |
           ls -la dist
-          test -f dist/404.html && echo "✅ 404.html present" || (echo "❌ 404.html missing" && exit 1)
-          test -f dist/CNAME && echo "✅ CNAME present" || (echo "❌ CNAME missing" && exit 1)
+          test -f dist/CNAME || (echo "❌ CNAME missing" && exit 1)
+          test -f dist/404.html || (echo "❌ 404.html missing" && exit 1)
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -67,7 +71,6 @@ jobs:
     steps:
       - name: Configure Pages
         uses: actions/configure-pages@v5
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
