@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import Calculators from "./pages/Calculators";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import EMI from "./pages/EMI";
+import Emi from "./pages/emi.jsx";
 import Eligibility from "./pages/Eligibility";
 import PartPrepaymentCalculator from "./pages/part-payment";
 import AmortizationCalculator from "./pages/amortization";
@@ -37,13 +37,13 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/calculators" element={<Calculators />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/calculators/emi" element={<EMI />} />
-        <Route path="/calculators/eligibility" element={<Eligibility />} />
-        <Route path="/calculators/part-payment" element={<PartPrepaymentCalculator />} />
-        <Route path="/calculators/amortization" element={<AmortizationCalculator />} />
+        <Route path="/Calculators" element={<Calculators />} />
+        <Route path="/About" element={<About />} />
+        <Route path="/Contact" element={<Contact />} />
+        <Route path="/Calculators/emi" element={<Emi />} />
+        <Route path="/Calculators/Eligibility" element={<Eligibility />} />
+        <Route path="/Calculators/part-payment" element={<PartPrepaymentCalculator />} />
+        <Route path="/Calculators/amortization" element={<AmortizationCalculator />} />
         <Route path="*" element={<Home />} />
       </Routes>
       <Footer />
